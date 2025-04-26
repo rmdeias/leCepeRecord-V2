@@ -79,6 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+
     /**
      * @param list<string> $roles
      */
@@ -88,6 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
     /**
      * @see PasswordAuthenticatedUserInterface

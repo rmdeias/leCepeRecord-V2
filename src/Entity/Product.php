@@ -22,7 +22,7 @@ class Product
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $releaseDate = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $iframeBandcamp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -46,19 +46,10 @@ class Product
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 0)]
     private ?string $price = null;
 
-    /**
-     * @var Collection<int, ProductAttribute>
-     */
-    #[ORM\OneToMany(targetEntity: ProductAttribute::class, mappedBy: 'product')]
-    private Collection $productAttributes;
-
     #[ORM\ManyToOne(inversedBy: 'product')]
     private ?Band $band = null;
 
-    public function __construct()
-    {
-        $this->productAttributes = new ArrayCollection();
-    }
+    public function __construct(){}
 
     public function getId(): ?int
     {
@@ -185,35 +176,6 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProductAttribute>
-     */
-    public function getProductAttributes(): Collection
-    {
-        return $this->productAttributes;
-    }
-
-    public function addProductAttribute(ProductAttribute $productAttribute): static
-    {
-        if (!$this->productAttributes->contains($productAttribute)) {
-            $this->productAttributes->add($productAttribute);
-            $productAttribute->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductAttribute(ProductAttribute $productAttribute): static
-    {
-        if ($this->productAttributes->removeElement($productAttribute)) {
-            // set the owning side to null (unless already changed)
-            if ($productAttribute->getProduct() === $this) {
-                $productAttribute->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getBand(): ?Band
     {

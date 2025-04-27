@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <main class="artistMain">
+        <div class="container">
+
+            <section>
+                <h1 class="artistName">{{ artist.name}}</h1>
+
+
+                <article class="artistArticle">
+
+
+                    <div class="artistsDescription">
+
+
+                        <img class="artistImg" src="{{ asset('uploads/images/artists/' ~ artist.illustration) }}">
+
+                        <p>{{ artist.description | raw}}</p>
+                        <ul class="artistLinks">
+                            <li><a class="facebook" href="{{ artist.linkFacebook }}"><i class="fab fa-facebook-square"></i></a></li>
+                            <li><a  href="{{ artist.linkInstagram }}"><img class="insta" src="{{ asset('assets/images/instagram_ig_logo_icon_134013.svg ')  }}" class="fab fa-youtube"></a></li>
+                            <li><a class="youtube" href="{{ artist.linkYoutube }}"><i class="fab fa-youtube"></i></a></li>
+                        </ul>
+
+                    </div>
+
+                    <div class="frames">
+                        {{artist.iframeBandcamp | raw }}
+                        {{artist.iframeYoutube | raw }}
+                    </div>
+
+                </article>
+            </section>
+
+            <hr>
+
+            <section >
+                <h2>Products from {{ artist.name }}</h2>
+
+                <div class ="allProducts">
+                    <div class = "card">
+
+                        {% for product in products %}
+                        <article class = "productCard">
+                            <a href="">
+                            <img class="img imgProduct" src="{{ asset('uploads/images/products/') ~ product.illustration }}">
+                            <img class="cache imgAlt imgProduct" src="{{ asset('uploads/images/products/') ~ product.illustrationAlt }}">
+                            </a>
+                            <div class="description">
+                                <h1>{{ artist.name }}</h1>
+                                <h2><a href="">{{ product.title }}</a></h2>
+                                <p>Release Date: {{ product.releaseDate | date("d/m/Y", "Europe/Paris") }}</p>
+                                <p>type: {{ product.type }}</p>
+                                <p>Price: {{ product.price }}</p>
+
+                            </div>
+                        </article>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+{% endblock %}

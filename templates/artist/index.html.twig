@@ -1,25 +1,31 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<div class="container">
-    <section class="allBands">
-        <div>
-            <h1>LE CEPE RECORDS ARTISTS</h1>
-            <hr>
+    <main class="allBandsPage">
+        <div class="container">
+            <section class="allBands">
+                <div>
+                    <h1>LE CEPE RECORDS ARTISTS</h1>
+                    <hr>
+                </div>
+
+                <div class="allBandsArticle">
+
+                    {% for artist in artists %}
+                        <article>
+
+
+                            <a href="{{ path('app_artist', { 'slug': artist.slug }) }}"><img class="bandImg"
+                                                                            src="{{ asset('uploads/images/artists/' ~ artist.illustration) }}"></a>
+                            <h4>{{ artist.name }}</h4>
+
+                        </article>
+                    {% endfor %}
+
+
+                </div>
+
+            </section>
+
         </div>
-
-        <div class="allBandsArticle" >
-
-            <article>
-
-                <a href="" ><img class ="bandImg" src=""></a>
-                <h4>Mon Groupe</h4>
-
-            </article>
-
-
-        </div>
-
-    </section>
-
-</div>
+    </main>
 {% endblock %}

@@ -33,6 +33,7 @@ class BandCrudController extends AbstractCrudController
             TextField::new('link_facebook'),
             TextField::new('link_youtube'),
             TextField::new('iframe_youtube'),
+            TextField::new('iframe_bandcamp'),
             SlugField::new('slug')
                 ->setTargetFieldName('name')
                 ->hideOnIndex(),

@@ -46,6 +46,9 @@ class Band
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'band')]
     private Collection $product;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $iframe_bandcamp = null;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
@@ -66,6 +69,11 @@ class Band
         $this->name = $name;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getDescription(): ?string
@@ -178,6 +186,18 @@ class Band
                 $product->setBand(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIframeBandcamp(): ?string
+    {
+        return $this->iframe_bandcamp;
+    }
+
+    public function setIframeBandcamp(?string $iframe_bandcamp): static
+    {
+        $this->iframe_bandcamp = $iframe_bandcamp;
 
         return $this;
     }

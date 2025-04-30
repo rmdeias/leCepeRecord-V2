@@ -64,12 +64,14 @@ class ProductCrudController extends AbstractCrudController
             ImageField::new('illustration')
                 ->setUploadDir('public/uploads/images/products/')
                 ->setBasePath('uploads/images/products/')
+                ->setUploadedFileNamePattern('[slug].[extension]')
                 ->setRequired(false),
 
 
             ImageField::new('illustration_alt')
                 ->setUploadDir('public/uploads/images/products/')
                 ->setBasePath('uploads/images/products/')
+                ->setUploadedFileNamePattern('[slug]-alt.[extension]')
                 ->setRequired(false),
 
             TextField::new('iframe_bandcamp'),

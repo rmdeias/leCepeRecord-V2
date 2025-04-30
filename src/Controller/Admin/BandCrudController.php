@@ -40,6 +40,7 @@ class BandCrudController extends AbstractCrudController
             ImageField::new('illustration')
                 ->setUploadDir('public/uploads/images/artists/')
                 ->setBasePath('uploads/images/artists/')
+                ->setUploadedFileNamePattern('[slug].[extension]')
                 ->setRequired(false),
             TextEditorField::new('description'),
         ];

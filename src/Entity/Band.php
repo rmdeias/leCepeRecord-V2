@@ -43,7 +43,7 @@ class Band
     /**
      * @var Collection<int, Product>
      */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'band')]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'band', orphanRemoval: true , cascade: ['all'])]
     private Collection $product;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

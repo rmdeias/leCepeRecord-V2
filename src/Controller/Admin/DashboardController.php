@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Band;
+use App\Entity\Event;
 use App\Entity\Product;
 use App\Entity\ProductAttribute;
 use App\Entity\User;
@@ -45,5 +46,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Product', 'fa fa-tags',Product::class);
         yield MenuItem::linkToCrud('Artist', 'fa fa-guitar',Band::class);
         yield MenuItem::linkToCrud('User', 'fa fa-user',User::class);
+        yield MenuItem::linkToCrud('Event', 'fa fa-calendar',Event::class);
     }
 }

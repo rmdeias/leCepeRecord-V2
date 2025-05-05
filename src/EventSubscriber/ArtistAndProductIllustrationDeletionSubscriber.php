@@ -2,16 +2,17 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Product;
+use App\Entity\Band;
 use App\Service\ImageDeletionService;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-
-class ProductIllustrationsDeletionSubscriber implements EventSubscriberInterface
+class ArtistAndProductIllustrationDeletionSubscriber implements EventSubscriberInterface
 {
+
     private LoggerInterface $logger;
+
     private ImageDeletionService $imageDeletionService;
 
     public function __construct(LoggerInterface $logger, ImageDeletionService $imageDeletionService)
@@ -35,18 +36,29 @@ class ProductIllustrationsDeletionSubscriber implements EventSubscriberInterface
         // Log pour vérifier si l'entité est bien capturée
         $this->logger->info('BeforeEntityDeletedEvent triggered for entity: ' . get_class($entity));
 
-        if (!$entity instanceof Product) {
+        if (!$entity instanceof Band) {
             return;
         }
 
-        $illustrations = [$entity->getIllustration(), $entity->getIllustrationAlt()];
+        $artistIllustration = $entity->getIllustration();
+        $product = $entity->getProduct();
 
-        foreach ($illustrations as $image) {
+        foreach ($product as $image) {
+
             if ($image) {
 
-                $this->imageDeletionService->deleteImage('products', $image);
+                $illustration = $image->getIllustration();
+                $illustrationAlt = $image->getIllustrationAlt();
+                $allProductIllustrations = [$illustration, $illustrationAlt];
+
+                foreach ($allProductIllustrations as $illustrationByProduct) {
+
+                    $this->imageDeletionService->deleteImage('products', $illustrationByProduct);
+                }
             }
         }
+
+        $this->imageDeletionService->deleteImage('artists', $artistIllustration);
     }
 
 }

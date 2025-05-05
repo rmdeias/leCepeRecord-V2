@@ -33,7 +33,8 @@ class UserCrudController extends AbstractCrudController
             TextField::new('firstName')->hideWhenUpdating(),
             TextField::new('lastName')->hideWhenUpdating(),
             EmailField::new('email')->hideWhenUpdating(),
-            ArrayField::new('roles', 'Change Roles')->setTemplatePath('admin/roles.html.twig')->onlyWhenUpdating(),
+            ArrayField::new('roles', "Pour ajouter un nouvel administrateur cliquer sur + et écrire ROLE_ADMIN")
+                ->setTemplatePath('admin/roles.html.twig')->onlyWhenUpdating(),
         ];
     }
 

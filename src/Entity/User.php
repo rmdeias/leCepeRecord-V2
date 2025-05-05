@@ -6,10 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -26,6 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+
     /**
      * @var string The hashed password
      */
@@ -33,9 +37,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
+    #[Assert\Length(min: 2, minMessage: 'Le prénom doit contenir au moins {{ limit }} caractères.')]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Zà-ÿÀ-Ÿ\- ]+$/',
+        message: 'Le prénom ne peut contenir que des lettres, des espaces, ou des tirets.')]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
+    #[Assert\Length(min: 2, minMessage: 'Le nom doit contenir au moins {{ limit }} caractères.')]
+    #[Assert\Regex(
+    pattern: '/^[a-zA-Zà-ÿÀ-Ÿ\- ]+$/',
+    message: 'Le nom ne peut contenir que des lettres, des espaces, ou des tirets.')]
     private ?string $lastName = null;
 
     public function getId(): ?int

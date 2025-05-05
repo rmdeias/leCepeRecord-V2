@@ -12,9 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use function Sodium\add;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Constraints\Regex;
+
 
 class RegistrationUserType extends AbstractType
 {
@@ -48,7 +49,7 @@ class RegistrationUserType extends AbstractType
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Les deux mots de passe doivent correspondre.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'first_options' => [
@@ -62,7 +63,13 @@ class RegistrationUserType extends AbstractType
                     'attr' => ['placeholder' => 'Confirmez votre Mot de Passe'],
                     ],
                 'constraints' => [
-                    new Length(['min' => 8]),
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un mot de passe.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/',
+                        'message' => 'Votre mot de passe doit contenir au moins 8 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial.',
+                    ]),
                 ],
                 'mapped' => false
             ])

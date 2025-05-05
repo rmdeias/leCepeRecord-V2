@@ -23,6 +23,10 @@ final class RegisterUserController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $entityManager->persist($user);
             $entityManager->flush();
+
+            // Redirection ou message de succès
+            //$this->addFlash('success', 'Inscription réussie !');
+            return $this->redirectToRoute('app_login'); // Redirection vers la page de login après inscription
         }
 
         return $this->render('register_user/index.html.twig', [
